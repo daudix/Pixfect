@@ -6,7 +6,7 @@ A pretty way to compress images
 
 This is very simple bash script that uses ImageMagick for sizing down an image and dithering it, main purpose is to give images pixel art look, but this also can be used to reduce the image size quite a lot
 
-![demo](demo/demo.webm)
+![demo](demo/demo.gif)
 
 ## How to use
 
