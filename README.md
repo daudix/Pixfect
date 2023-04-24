@@ -10,7 +10,7 @@ This is very simple bash script that uses ImageMagick for sizing down an image a
 
 ## How to use
 
-It's simple as running `pixfect.sh` from terminal
+It's as simple as running `pixfect.sh` from terminal
 
 ```sh
 ./pixfect.sh [options] <input> <output>
