@@ -37,6 +37,8 @@ The name is a combination of Pixel and Perfect, "Pixel Perfect" is used to tell 
 
 ## Similar projects
 
+https://doodad.dev/dither-me-this
+
 https://github.com/dbohdan/hicolor
 
 https://github.com/giventofly/pixelit
