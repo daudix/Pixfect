@@ -8,9 +8,6 @@ This is very simple bash script that uses ImageMagick for sizing down an image a
 
 ![demo](demo/demo.gif)
 
-> **Note**
-> For color reducion and dithering you probably should use [dbohdan/hicolor](https://github.com/dbohdan/hicolor)
-
 ## How to use
 
 It's as simple as running `pixfect.sh` from terminal
@@ -37,6 +34,14 @@ All available options can be displayed using `./pixfect.sh --help`
 ## The name
 
 The name is a combination of Pixel and Perfect, "Pixel Perfect" is used to tell that image is created precisely to be sharp
+
+## Similar projects
+
+https://github.com/dbohdan/hicolor
+
+https://github.com/giventofly/pixelit
+
+https://github.com/MiguelMJ/MakeItPixel
 
 ## Resources
 
