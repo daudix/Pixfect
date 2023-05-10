@@ -29,7 +29,7 @@ All available options can be displayed using `./pixfect.sh --help`
 ## Variants
 
 - Pixfect video: experimental video to pixel art GIF converter (requires ffmpeg)
-- Ditherer: Pixfect but without stylized filters like sharpen and kuwahara, can be used to reduce image size for Gemini capsule, for example
+- Ditherer: Pixfect but without stylized filters like sharpen and kuwahara, for example, it can be used to reduce image size for Gemini capsule
 
 ## The name
 
