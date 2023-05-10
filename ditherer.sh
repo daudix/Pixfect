@@ -12,7 +12,7 @@ image_filters=""
 # Define a function to print the help message
 help() {
     echo "Usage: $0 [options] <input> <output>"
-    echo "Pixfect - Tool for dithering and converting images to pixel art"
+    echo "Ditherer - Tool for dithering images"
     echo ""
     echo "Options:"
     echo "  -s, --size		Resolution of image for manipulation (default: 128)"
@@ -73,7 +73,7 @@ fi
 # Use fallback if output file not specified
 
 if [[ -z "$output_file" ]]; then
-    output_file="$(echo "$input_file" | cut -f 1 -d '.')-pixfect.png"
+    output_file="$(echo "$input_file" | cut -f 1 -d '.')-ditherer.png"
 fi
 
 # Check if input file exists
