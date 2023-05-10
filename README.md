@@ -21,6 +21,7 @@ Available options:
 - `--size`: Resolution of image for manipulation
 - `--scale`: Scale factor of output image
 - `--colors`: Amount of colors used in image
+- `--kuwahara`: Specify amount of kuwahara filter
 - `--filters`: Specify Additional ImageMagick filters
 
 All available options can be displayed using `./pixfect.sh --help`
