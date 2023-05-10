@@ -6,7 +6,8 @@
 
 image_size="128"
 image_scale="200%"
-image_colors="10"
+image_colors="8"
+image_kuwahara="1"
 image_filters=""
 
 # Define a function to print the help message
@@ -18,6 +19,7 @@ help() {
     echo "  -s, --size		Resolution of image for manipulation (default: 128)"
     echo "  -x, --scale		Scale factor of output image (default: 200%)"
     echo "  -c, --colors		Amount of colors used in image (default: 10)"
+    echo "  -k, --kuwahara		Specify amount of kuwahara filter (default: 2)"
     echo "  -f, --filters		Specify Additional ImageMagick filters (default: none)"
     echo "  -h, --help		Display help message"
 }
@@ -38,6 +40,11 @@ while [[ $# -gt 0 ]]; do
         ;;
         -c|--colors)
         image_colors="$2"
+        shift
+        shift
+        ;;
+        -k|--kuwahara)
+        image_kuwahara="$2"
         shift
         shift
         ;;
@@ -93,8 +100,11 @@ spinner() {
 }
 
 # Image conversion
-convert_file() {   
-    convert $input_file -resize $image_size -dither FloydSteinberg -colors $image_colors -filter point -resize $image_scale $image_filters $output_file
+convert_file() {
+    convert $input_file -resize $image_size \
+	-kuwahara $image_kuwahara $image_filters -sharpen 0x3 -ordered-dither o8x8,$image_colors \
+    -filter point -resize $image_scale \
+    $output_file
 }
 
 # Start spinner animation
