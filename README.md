@@ -26,6 +26,11 @@ Available options:
 
 All available options can be displayed using `./pixfect.sh --help`
 
+## Variants
+
+- Pixfect video: experimental video to pixel art GIF converter (requires ffmpeg)
+- Ditherer: Pixfect but without stylized filters like sharpen and kuwahara
+
 ## The name
 
 The name is a combination of Pixel and Perfect, "Pixel Perfect" is used to tell that image is created precisely to be sharp
