@@ -8,6 +8,9 @@ This is very simple bash script that uses ImageMagick for sizing down an image a
 
 ![demo](demo/demo.gif)
 
+> **Note**
+> For color reducion and dithering you probably should use [dbohdan/hicolor](https://github.com/dbohdan/hicolor)
+
 ## How to use
 
 It's as simple as running `pixfect.sh` from terminal
