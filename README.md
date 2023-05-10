@@ -33,5 +33,7 @@ The name is a combination of Pixel and Perfect, "Pixel Perfect" is used to tell 
 ## Resources
 
 https://legacy.imagemagick.org/Usage/quantize/#colors
+
 https://legacy.imagemagick.org/Usage/blur/#sharpen
+
 https://legacy.imagemagick.org/discourse-server/viewtopic.php?t=26480
