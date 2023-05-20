@@ -47,6 +47,8 @@ https://github.com/MiguelMJ/MakeItPixel
 
 ## Resources
 
+https://mastodon.social/@tbernard/109675668676999287
+
 https://legacy.imagemagick.org/Usage/quantize/#colors
 
 https://legacy.imagemagick.org/Usage/blur/#sharpen
