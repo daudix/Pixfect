@@ -125,6 +125,7 @@ if [[ "$image_video" == "true" ]]; then
     # Video argument specified
     convert_file() {
         mkdir frames
+
         ffmpeg -hide_banner -loglevel error -i $input_file -vf "fps=10,scale=128:-1" frames/frame-%03d.png
         ffmpeg -hide_banner -loglevel error -i frames/frame-%03d.png -vf "palettegen=max_colors=10" palette.png
         ffmpeg -hide_banner -loglevel error -i frames/frame-%03d.png -i palette.png -filter_complex "fps=10, paletteuse=dither=floyd_steinberg" $output_file
