@@ -23,9 +23,10 @@ Available options:
 
 - `--size`: Resolution of image for manipulation (default: 128)
 - `--colors`: Amount of colors used in image (default: 10)
+- `--filters`: Specify Additional ImageMagick filters
 - `--grayscale`: Convert image to grayscale
 - `--video`: Convert video (experimental)
-- `--filters`: Specify Additional ImageMagick filters
+- `--fps`: Frames per second for video
 - `--help`: Display help message
 
 All available options can be displayed using `./pixfect.sh --help`
