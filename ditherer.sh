@@ -4,10 +4,10 @@
 
 # Basic configuration
 
-image_size="128"
-image_scale="200%"
-image_colors="8"
+image_size="512"
+image_colors="10"
 image_filters=""
+image_grayscale="false"
 
 # Define a function to print the help message
 help() {
@@ -15,11 +15,11 @@ help() {
     echo "Ditherer - Tool for dithering images"
     echo ""
     echo "Options:"
-    echo "  -s, --size		Resolution of image for manipulation (default: 128)"
-    echo "  -x, --scale		Scale factor of output image (default: 200%)"
-    echo "  -c, --colors		Amount of colors used in image (default: 10)"
-    echo "  -f, --filters		Specify Additional ImageMagick filters (default: none)"
-    echo "  -h, --help		Display help message"
+    echo "  -s, --size          Resolution of image for manipulation (default: 128)"
+    echo "  -c, --colors        Amount of colors used in image (default: 10)"
+    echo "  -g, --grayscale     Convert image to grayscale"
+    echo "  -f, --filters       Specify Additional ImageMagick filters"
+    echo "  -h, --help          Display help message"
 }
 
 # Parse arguments
@@ -31,19 +31,13 @@ while [[ $# -gt 0 ]]; do
         shift
         shift
         ;;
-        -x|--scale)
-        image_scale="$2"
-        shift
-        shift
-        ;;
         -c|--colors)
         image_colors="$2"
         shift
         shift
         ;;
-        -k|--kuwahara)
-        image_kuwahara="$2"
-        shift
+        -g|--grayscale)
+        image_grayscale="true"
         shift
         ;;
         -f|--filters)
@@ -52,7 +46,7 @@ while [[ $# -gt 0 ]]; do
         shift
         ;;
         -h|--help)
-	help
+        help
         exit 0
         ;;
         *)
@@ -64,16 +58,10 @@ done
 input_file="$1"
 output_file="$2"
 
-# Check if input file are specified
+# Check if input file is specified
 if [[ -z "$input_file" ]]; then
     echo "Error: input file not specified"
     exit 1
-fi
-
-# Use fallback if output file not specified
-
-if [[ -z "$output_file" ]]; then
-    output_file="$(echo "$input_file" | cut -f 1 -d '.')-ditherer.png"
 fi
 
 # Check if input file exists
@@ -82,9 +70,14 @@ if [[ ! -f "$input_file" ]]; then
     exit 1
 fi
 
+# Use fallback if output file not specified
+if [[ -z "$output_file" ]]; then
+    output_file="${input_file%.*}-ditherer.png"
+fi
+
 # Fancy spinner
 spinner() {
-    local pid=$!
+    local pid=$1
     local delay=0.1
     local spinstr='|/-\'
     while [ "$(ps a | awk '{print $1}' | grep $pid)" ]; do
@@ -98,12 +91,21 @@ spinner() {
 }
 
 # Image conversion
-convert_file() {
-    convert $input_file -resize $image_size \
-	$image_filters -ordered-dither o8x8,$image_colors \
-    -filter point -resize $image_scale \
-    $output_file
-}
+if [[ "$image_grayscale" == "true" ]]; then
+    # Grayscale argument specified
+    convert_file() {
+        convert "$input_file" -resize "$image_size" \
+        $image_filters -colorspace gray -ordered-dither o8x8 \
+        "$output_file"
+    }
+else
+    # Grayscale argument not specified
+    convert_file() {
+        convert "$input_file" -resize "$image_size" \
+        $image_filters -ordered-dither o8x8,"$image_colors" \
+        "$output_file"
+    }
+fi
 
 # Start spinner animation
 convert_file &
