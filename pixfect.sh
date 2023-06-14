@@ -8,6 +8,7 @@ image_size="128"
 image_colors="10"
 image_grayscale="false"
 image_video="false"
+image_fps="10"
 image_filters=""
 
 # Define a function to print the help message
@@ -20,6 +21,7 @@ help() {
     echo "  -c, --colors        Amount of colors used in image (default: 10)"
     echo "  -g, --grayscale     Convert image to grayscale"
     echo "  -v, --video         Convert video (experimental)"
+    echo "  -f, --fps           Frames per second for video"
     echo "  -f, --filters       Specify Additional ImageMagick filters"
     echo "  -h, --help          Display help message"
 }
@@ -124,13 +126,13 @@ fi
 if [[ "$image_video" == "true" ]]; then
     # Video argument specified
     convert_file() {
-        mkdir frames
+        mkdir .frames
 
-        ffmpeg -hide_banner -loglevel error -i $input_file -vf "fps=10,scale=128:-1" frames/frame-%03d.png
-        ffmpeg -hide_banner -loglevel error -i frames/frame-%03d.png -vf "palettegen=max_colors=10" palette.png
-        ffmpeg -hide_banner -loglevel error -i frames/frame-%03d.png -i palette.png -filter_complex "fps=10, paletteuse=dither=floyd_steinberg" $output_file
+        ffmpeg -hide_banner -loglevel error -i $input_file -vf "fps=$image_fps,scale=$image_size:-1" .frames/frame-%03d.png
+        ffmpeg -hide_banner -loglevel error -i .frames/frame-%03d.png -vf "palettegen=max_colors=$image_colors" palette.png
+        ffmpeg -hide_banner -loglevel error -i .frames/frame-%03d.png -i palette.png -filter_complex "fps=$image_fps, paletteuse=dither=bayer" $output_file
 
-        rm -rf frames
+        rm -rf .frames
         rm palette.png
     }
 fi
