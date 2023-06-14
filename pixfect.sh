@@ -21,7 +21,7 @@ help() {
     echo "  -c, --colors        Amount of colors used in image (default: 10)"
     echo "  -g, --grayscale     Convert image to grayscale"
     echo "  -v, --video         Convert video (experimental)"
-    echo "  -f, --fps           Frames per second for video"
+    echo "  -p, --fps           Frames per second for video"
     echo "  -f, --filters       Specify Additional ImageMagick filters"
     echo "  -h, --help          Display help message"
 }
@@ -46,6 +46,10 @@ while [[ $# -gt 0 ]]; do
         ;;
         -v|--video)
         image_video="true"
+        shift
+        ;;
+        -p|--fps)
+        image_fps="$2"
         shift
         ;;
         -f|--filters)
