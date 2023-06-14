@@ -5,9 +5,9 @@
 # Basic configuration
 
 image_size="128"
-image_scale="200%"
-image_colors="8"
-image_kuwahara="1"
+image_colors="10"
+image_grayscale="false"
+image_video="false"
 image_filters=""
 
 # Define a function to print the help message
@@ -16,12 +16,12 @@ help() {
     echo "Pixfect - Tool for dithering and converting images to pixel art"
     echo ""
     echo "Options:"
-    echo "  -s, --size		Resolution of image for manipulation (default: 128)"
-    echo "  -x, --scale		Scale factor of output image (default: 200%)"
-    echo "  -c, --colors		Amount of colors used in image (default: 10)"
-    echo "  -k, --kuwahara		Specify amount of kuwahara filter (default: 2)"
-    echo "  -f, --filters		Specify Additional ImageMagick filters (default: none)"
-    echo "  -h, --help		Display help message"
+    echo "  -s, --size          Resolution of image for manipulation (default: 128)"
+    echo "  -c, --colors        Amount of colors used in image (default: 10)"
+    echo "  -g, --grayscale     Convert image to grayscale"
+    echo "  -v, --video         Convert video"
+    echo "  -f, --filters       Specify Additional ImageMagick filters"
+    echo "  -h, --help          Display help message"
 }
 
 # Parse arguments
@@ -33,19 +33,17 @@ while [[ $# -gt 0 ]]; do
         shift
         shift
         ;;
-        -x|--scale)
-        image_scale="$2"
-        shift
-        shift
-        ;;
         -c|--colors)
         image_colors="$2"
         shift
         shift
         ;;
-        -k|--kuwahara)
-        image_kuwahara="$2"
+        -g|--grayscale)
+        image_grayscale="true"
         shift
+        ;;
+        -v|--video)
+        image_video="true"
         shift
         ;;
         -f|--filters)
@@ -54,7 +52,7 @@ while [[ $# -gt 0 ]]; do
         shift
         ;;
         -h|--help)
-	help
+        help
         exit 0
         ;;
         *)
@@ -66,16 +64,10 @@ done
 input_file="$1"
 output_file="$2"
 
-# Check if input file are specified
+# Check if input file is specified
 if [[ -z "$input_file" ]]; then
     echo "Error: input file not specified"
     exit 1
-fi
-
-# Use fallback if output file not specified
-
-if [[ -z "$output_file" ]]; then
-    output_file="$(echo "$input_file" | cut -f 1 -d '.')-pixfect.png"
 fi
 
 # Check if input file exists
@@ -84,9 +76,22 @@ if [[ ! -f "$input_file" ]]; then
     exit 1
 fi
 
+# Use fallback if output file not specified
+if [[ "$image_video" == "false" ]]; then
+    if [[ -z "$output_file" ]]; then
+        output_file="${input_file%.*}-pixfect.png"
+    fi
+fi
+
+if [[ "$image_video" == "true" ]]; then
+    if [[ -z "$output_file" ]]; then
+        output_file="${input_file%.*}-pixfect.gif"
+    fi
+fi
+
 # Fancy spinner
 spinner() {
-    local pid=$!
+    local pid=$1
     local delay=0.1
     local spinstr='|/-\'
     while [ "$(ps a | awk '{print $1}' | grep $pid)" ]; do
@@ -100,12 +105,34 @@ spinner() {
 }
 
 # Image conversion
-convert_file() {
-    convert $input_file -resize $image_size \
-	-kuwahara $image_kuwahara $image_filters -sharpen 0x3 -ordered-dither o8x8,$image_colors \
-    -filter point -resize $image_scale \
-    $output_file
-}
+if [[ "$image_grayscale" == "true" ]]; then
+    # Grayscale argument specified
+    convert_file() {
+        convert "$input_file" -resize "$image_size" \
+        $image_filters -colorspace gray -ordered-dither o8x8 \
+        "$output_file"
+    }
+else
+    # Grayscale argument not specified
+    convert_file() {
+        convert "$input_file" -resize "$image_size" \
+        $image_filters -ordered-dither o8x8,"$image_colors" \
+        "$output_file"
+    }
+fi
+
+if [[ "$image_video" == "true" ]]; then
+    # Video argument specified
+    convert_file() {
+        mkdir frames
+        ffmpeg -hide_banner -loglevel error -i $input_file -vf "fps=10,scale=128:-1" frames/frame-%03d.png
+        ffmpeg -hide_banner -loglevel error -i frames/frame-%03d.png -vf "palettegen=max_colors=10" palette.png
+        ffmpeg -hide_banner -loglevel error -i frames/frame-%03d.png -i palette.png -filter_complex "fps=10, paletteuse=dither=floyd_steinberg" $output_file
+
+        rm -rf frames
+        rm palette.png
+    }
+fi
 
 # Start spinner animation
 convert_file &
