@@ -130,7 +130,7 @@ if [[ "$image_video" == "true" ]]; then
 
         ffmpeg -hide_banner -loglevel error -i $input_file -vf "fps=$image_fps,scale=$image_size:-1" .frames/frame-%03d.png
         ffmpeg -hide_banner -loglevel error -i .frames/frame-%03d.png -vf "palettegen=max_colors=$image_colors" palette.png
-        ffmpeg -hide_banner -loglevel error -i .frames/frame-%03d.png -i palette.png -filter_complex "fps=$image_fps, paletteuse=dither=bayer" $output_file
+        ffmpeg -hide_banner -loglevel error -y -i .frames/frame-%03d.png -i palette.png -filter_complex "fps=$image_fps, paletteuse=dither=bayer" $output_file
 
         rm -rf .frames
         rm palette.png
