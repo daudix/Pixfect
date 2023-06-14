@@ -1,6 +1,6 @@
 # Pixfect
 
-A pretty way to compress images
+A pretty way to compress images and videos
 
 > **Note**
 > Check out [Halftone](https://github.com/tfuxu/Halftone), an app for dithering images to give them _that_ pixel art look

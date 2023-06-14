@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# Pixfect - Pixel perfect image to pixel-art converter
+# Pixfect - Pixel perfect image/video to pixel-art converter
 
 # Basic configuration
 
@@ -13,7 +13,7 @@ image_filters=""
 # Define a function to print the help message
 help() {
     echo "Usage: $0 [options] <input> <output>"
-    echo "Pixfect - Tool for dithering and converting images to pixel art"
+    echo "Pixfect - Tool for dithering and converting images/videos to pixel art"
     echo ""
     echo "Options:"
     echo "  -s, --size          Resolution of image for manipulation (default: 128)"
