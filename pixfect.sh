@@ -19,7 +19,7 @@ help() {
     echo "  -s, --size          Resolution of image for manipulation (default: 128)"
     echo "  -c, --colors        Amount of colors used in image (default: 10)"
     echo "  -g, --grayscale     Convert image to grayscale"
-    echo "  -v, --video         Convert video"
+    echo "  -v, --video         Convert video (experimental)"
     echo "  -f, --filters       Specify Additional ImageMagick filters"
     echo "  -h, --help          Display help message"
 }

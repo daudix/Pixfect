@@ -21,18 +21,14 @@ It's as simple as running `pixfect.sh` from terminal
 
 Available options:
 
-- `--size`: Resolution of image for manipulation
-- `--scale`: Scale factor of output image
-- `--colors`: Amount of colors used in image
-- `--kuwahara`: Specify amount of kuwahara filter
+- `--size`: Resolution of image for manipulation (default: 128)
+- `--colors`: Amount of colors used in image (default: 10)
+- `--grayscale`: Convert image to grayscale
+- `--video`: Convert video (experimental)
 - `--filters`: Specify Additional ImageMagick filters
+- `--help`: Display help message
 
 All available options can be displayed using `./pixfect.sh --help`
-
-## Variants
-
-- Pixfect video: experimental video to pixel art GIF converter (requires ffmpeg)
-- Ditherer: Pixfect but without stylized filters like sharpen and kuwahara, for example, it can be used to reduce image size for Gemini capsule
 
 ## The name
 
