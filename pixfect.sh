@@ -6,10 +6,10 @@
 
 image_size="128"
 image_colors="10"
+image_filters=""
 image_grayscale="false"
 image_video="false"
 image_fps="10"
-image_filters=""
 
 # Define a function to print the help message
 help() {
@@ -19,10 +19,10 @@ help() {
     echo "Options:"
     echo "  -s, --size          Resolution of image for manipulation (default: 128)"
     echo "  -c, --colors        Amount of colors used in image (default: 10)"
+    echo "  -f, --filters       Specify Additional ImageMagick filters"
     echo "  -g, --grayscale     Convert image to grayscale"
     echo "  -v, --video         Convert video (experimental)"
     echo "  -p, --fps           Frames per second for video"
-    echo "  -f, --filters       Specify Additional ImageMagick filters"
     echo "  -h, --help          Display help message"
 }
 
@@ -50,6 +50,7 @@ while [[ $# -gt 0 ]]; do
         ;;
         -p|--fps)
         image_fps="$2"
+        shift
         shift
         ;;
         -f|--filters)
