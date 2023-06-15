@@ -119,7 +119,7 @@ if [[ "$image_video" == "true" ]]; then
         mkdir /tmp/pixfect_temp /tmp/pixfect_temp/frames
 
         ffmpeg -hide_banner -loglevel error -i $input_file -vf "fps=$image_fps,scale=$image_size:-1" /tmp/pixfect_temp/frames/frame-%03d.png
-        ffmpeg -hide_banner -loglevel error -i /tmp/pixfect_temp/frames/frame-%03d.png -vf "palettegen=max_colors=$image_colors" /tmp/pixfect_temp/palette.png
+        ffmpeg -hide_banner -loglevel error -i /tmp/pixfect_temp/frames/frame-%03d.png -vf "palettegen=max_colors=$((image_colors + 1))" /tmp/pixfect_temp/palette.png
         ffmpeg -hide_banner -loglevel error -y -i /tmp/pixfect_temp/frames/frame-%03d.png -i /tmp/pixfect_temp/palette.png -filter_complex "fps=$image_fps, paletteuse=dither=bayer" $output_file
     }
 fi
