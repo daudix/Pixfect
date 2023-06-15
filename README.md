@@ -26,7 +26,7 @@ Available options:
 - `--filters`: Specify Additional ImageMagick filters
 - `--grayscale`: Convert image to grayscale
 - `--video`: Convert video (experimental)
-- `--fps`: Frames per second for video
+- `--fps`: Frames per second for video (default: 10)
 - `--help`: Display help message
 
 All available options can be displayed using `./pixfect.sh --help`

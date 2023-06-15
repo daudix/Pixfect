@@ -22,7 +22,7 @@ help() {
     echo "  -f, --filters       Specify Additional ImageMagick filters"
     echo "  -g, --grayscale     Convert image to grayscale"
     echo "  -v, --video         Convert video (experimental)"
-    echo "  -p, --fps           Frames per second for video"
+    echo "  -p, --fps           Frames per second for video (default: 10)"
     echo "  -h, --help          Display help message"
 }
 
