@@ -7,7 +7,6 @@
 image_size="128"
 image_colors="10"
 image_filters=""
-image_grayscale="false"
 image_video="false"
 image_fps="10"
 
@@ -20,7 +19,6 @@ help() {
     echo "  -s, --size          Resolution of image for manipulation (default: 128)"
     echo "  -c, --colors        Amount of colors used in image (default: 10)"
     echo "  -f, --filters       Specify Additional ImageMagick filters"
-    echo "  -g, --grayscale     Convert image to grayscale"
     echo "  -v, --video         Convert video (experimental)"
     echo "  -p, --fps           Frames per second for video (default: 10)"
     echo "  -h, --help          Display help message"
@@ -38,10 +36,6 @@ while [[ $# -gt 0 ]]; do
         -c|--colors)
         image_colors="$2"
         shift
-        shift
-        ;;
-        -g|--grayscale)
-        image_grayscale="true"
         shift
         ;;
         -v|--video)
@@ -112,24 +106,14 @@ spinner() {
 }
 
 # Image conversion
-if [[ "$image_grayscale" == "true" ]]; then
-    # Grayscale argument specified
-    convert_file() {
-        convert "$input_file" -resize "$image_size" \
-        $image_filters -colorspace gray -ordered-dither o8x8 \
-        "$output_file"
-    }
-else
-    # Grayscale argument not specified
-    convert_file() {
-        convert "$input_file" -resize "$image_size" \
-        $image_filters -ordered-dither o8x8,"$image_colors" \
-        "$output_file"
-    }
-fi
+convert_file() {
+	convert "$input_file" -resize "$image_size" \
+	$image_filters -ordered-dither o8x8,"$image_colors" \
+	"$output_file"
+}
 
+# Video conversion
 if [[ "$image_video" == "true" ]]; then
-    # Video argument specified
     convert_file() {
     	rm -rf /tmp/pixfect_temp
         mkdir /tmp/pixfect_temp /tmp/pixfect_temp/frames
