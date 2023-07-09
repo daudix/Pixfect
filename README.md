@@ -1,3 +1,6 @@
+> **Warning**
+> This repository has been moved to [Codeberg](https://codeberg.org/daudix-UFO/Pixfect), all future work will continue there.
+
 # Pixfect
 
 A pretty way to compress images and videos
